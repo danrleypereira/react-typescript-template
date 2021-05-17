@@ -1,25 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+
+import SigninPage from "./pages/signin";
+import GlobalStyle from "./styles/globals";
+
+import Player from "./Components/Player/playerdemo";
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
+import Signin from "./pages/signin";
+
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {/*}
+      <Router>
+        <div className="App">
+          <header className="App-header">
+
+            <Signin/>
+          </header>
+        </div>
+      </Router>
+      */}
+      <Router>
+        <Route path="/">
+          <h1>Main</h1>
+        </Route>
+        <Route  path="/Login" component={Signin}/>
+        <Route  path="/Player" component={Player}/>
+        {/* <SigninPage /> */}
+        <GlobalStyle />
+      </Router>
+
+    </>
   );
 }
 
