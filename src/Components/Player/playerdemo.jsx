@@ -4,30 +4,20 @@ import { findDOMNode } from "react-dom";
 import { hot } from "react-hot-loader";
 import screenfull from "screenfull";
 
-// import "./reset.css";
-// import "./defaults.css";
-// import "./range.css";
 import "./App.css";
 
 import ReactPlayer from "react-player";
-import Duration from "./Duration";
 
 class Player extends Component {
   state = {
     url: null,
     pip: false,
-    playing: true,
-    light: false,
-    played: 0,
-    loaded: 0,
-    duration: 0
+    playing: true
   }
 
   load = url => {
     this.setState({
       url,
-      played: 0,
-      loaded: 0,
       pip: false
     })
   }
@@ -38,10 +28,6 @@ class Player extends Component {
 
   handleStop = () => {
     this.setState({ url: null, playing: false })
-  }
-
-  handleToggleLight = () => {
-    this.setState({ light: !this.state.light })
   }
 
   handleTogglePIP = () => {
@@ -80,11 +66,6 @@ class Player extends Component {
     console.log('onEnded')
   }
 
-  handleDuration = (duration) => {
-    console.log('onDuration', duration)
-    this.setState({ duration })
-  }
-
   handleClickFullscreen = () => {
     screenfull.request(findDOMNode(this.player))
   }
@@ -102,8 +83,7 @@ class Player extends Component {
   }
 
   render () {
-    const { url, playing, light, played, loaded, duration, pip } = this.state
-    const SEPARATOR = ' · '
+    const { url, playing, pip } = this.state
 
     return (
       <div className='app'>
@@ -117,7 +97,6 @@ class Player extends Component {
               url={url}
               pip={pip}
               playing={playing}
-              light={light}
               onReady={() => console.log('onReady')}
               onStart={() => console.log('onStart')}
               onPlay={this.handlePlay}
@@ -128,7 +107,6 @@ class Player extends Component {
               onEnded={this.handleEnded}
               onError={e => console.log('onError', e)}
               onProgress={this.handleProgress}
-              onDuration={this.handleDuration}
             />
           </div>
 
@@ -140,27 +118,9 @@ class Player extends Component {
                   <button onClick={this.handleStop}>Stop</button>
                   <button onClick={this.handlePlayPause}>{playing ? 'Pause' : 'Play'}</button>
                   <button onClick={this.handleClickFullscreen}>Fullscreen</button>
-                  {light &&
-                    <button onClick={() => this.player.showPreview()}>Show preview</button>}
                   {ReactPlayer.canEnablePIP(url) &&
                     <button onClick={this.handleTogglePIP}>{pip ? 'Disable PiP' : 'Enable PiP'}</button>}
                 </td>
-              </tr>
-              <tr>
-                <th>
-                  <label htmlFor='light'>Light mode</label>
-                </th>
-                <td>
-                  <input id='light' type='checkbox' checked={light} onChange={this.handleToggleLight} />
-                </td>
-              </tr>
-              <tr>
-                <th>Played</th>
-                <td><progress max={1} value={played} /></td>
-              </tr>
-              <tr>
-                <th>Loaded</th>
-                <td><progress max={1} value={loaded} /></td>
               </tr>
             </tbody>
           </table>
@@ -168,99 +128,6 @@ class Player extends Component {
         <section className='section'>
           <table>
             <tbody>
-              <tr>
-                <th>YouTube</th>
-                <td>
-                  {this.renderLoadButton('https://www.youtube.com/watch?v=oUFJJNQGwhk', 'Test A')}
-                  {this.renderLoadButton('https://www.youtube.com/watch?v=jNgP6d9HraI', 'Test B')}
-                  {this.renderLoadButton('https://www.youtube.com/playlist?list=PLogRWNZ498ETeQNYrOlqikEML3bKJcdcx', 'Playlist')}
-                </td>
-              </tr>
-              <tr>
-                <th>SoundCloud</th>
-                <td>
-                  {this.renderLoadButton('https://soundcloud.com/miami-nights-1984/accelerated', 'Test A')}
-                  {this.renderLoadButton('https://soundcloud.com/tycho/tycho-awake', 'Test B')}
-                  {this.renderLoadButton('https://soundcloud.com/yunghog/sets/doperaptraxxx', 'Playlist')}
-                </td>
-              </tr>
-              <tr>
-                <th>Facebook</th>
-                <td>
-                  {this.renderLoadButton('https://www.facebook.com/facebook/videos/10153231379946729/', 'Test A')}
-                  {this.renderLoadButton('https://www.facebook.com/FacebookDevelopers/videos/10152454700553553/', 'Test B')}
-                </td>
-              </tr>
-              <tr>
-                <th>Vimeo</th>
-                <td>
-                  {this.renderLoadButton('https://vimeo.com/90509568', 'Test A')}
-                  {this.renderLoadButton('https://vimeo.com/169599296', 'Test B')}
-                </td>
-              </tr>
-              <tr>
-                <th>Twitch</th>
-                <td>
-                  {this.renderLoadButton('https://www.twitch.tv/videos/106400740', 'Test A')}
-                  {this.renderLoadButton('https://www.twitch.tv/videos/12783852', 'Test B')}
-                  {this.renderLoadButton('https://www.twitch.tv/kronovi', 'Test C')}
-                </td>
-              </tr>
-              <tr>
-                <th>Streamable</th>
-                <td>
-                  {this.renderLoadButton('https://streamable.com/moo', 'Test A')}
-                  {this.renderLoadButton('https://streamable.com/ifjh', 'Test B')}
-                </td>
-              </tr>
-              <tr>
-                <th>Wistia</th>
-                <td>
-                  {this.renderLoadButton('https://home.wistia.com/medias/e4a27b971d', 'Test A')}
-                  {this.renderLoadButton('https://home.wistia.com/medias/29b0fbf547', 'Test B')}
-                  {this.renderLoadButton('https://home.wistia.com/medias/bq6epni33s', 'Test C')}
-                </td>
-              </tr>
-              <tr>
-                <th>DailyMotion</th>
-                <td>
-                  {this.renderLoadButton('https://www.dailymotion.com/video/x5e9eog', 'Test A')}
-                  {this.renderLoadButton('https://www.dailymotion.com/video/x61xx3z', 'Test B')}
-                </td>
-              </tr>
-              <tr>
-                <th>Mixcloud</th>
-                <td>
-                  {this.renderLoadButton('https://www.mixcloud.com/mixcloud/meet-the-curators/', 'Test A')}
-                  {this.renderLoadButton('https://www.mixcloud.com/mixcloud/mixcloud-curates-4-mary-anne-hobbs-in-conversation-with-dan-deacon/', 'Test B')}
-                </td>
-              </tr>
-              <tr>
-                <th>Vidyard</th>
-                <td>
-                  {this.renderLoadButton('https://video.vidyard.com/watch/YBvcF2BEfvKdowmfrRwk57', 'Test A')}
-                  {this.renderLoadButton('https://video.vidyard.com/watch/BLXgYCDGfwU62vdMWybNVJ', 'Test B')}
-                </td>
-              </tr>
-              <tr>
-                <th>Kaltura</th>
-                <td>
-                  {this.renderLoadButton('https://cdnapisec.kaltura.com/p/2507381/sp/250738100/embedIframeJs/uiconf_id/44372392/partner_id/2507381?iframeembed=true&playerId=kaltura_player_1605622074&entry_id=1_jz404fbl', 'Test A')}
-                  {this.renderLoadButton('https://cdnapisec.kaltura.com/p/2507381/sp/250738100/embedIframeJs/uiconf_id/44372392/partner_id/2507381?iframeembed=true&playerId=kaltura_player_1605622336&entry_id=1_i1jmzcn3', 'Test B')}
-                </td>
-              </tr>
-              <tr>
-                <th>Files</th>
-                <td>
-                  {this.renderLoadButton('https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4', 'mp4')}
-                  {this.renderLoadButton('https://test-videos.co.uk/vids/bigbuckbunny/webm/vp8/360/Big_Buck_Bunny_360_10s_1MB.webm', 'webm')}
-                  {this.renderLoadButton('https://filesamples.com/samples/video/ogv/sample_640x360.ogv', 'ogv')}
-                  {this.renderLoadButton('https://storage.googleapis.com/media-session/elephants-dream/the-wires.mp3', 'mp3')}
-                  <br />
-                  {this.renderLoadButton('https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8', 'HLS (m3u8)')}
-                  {this.renderLoadButton('http://dash.edgesuite.net/envivio/EnvivioDash3/manifest.mpd', 'DASH (mpd)')}
-                </td>
-              </tr>
               <tr>
                 <th>Custom URL</th>
                 <td>
@@ -285,35 +152,9 @@ class Player extends Component {
                 <th>playing</th>
                 <td>{playing ? 'true' : 'false'}</td>
               </tr>
-              <tr>
-                <th>played</th>
-                <td>{played.toFixed(3)}</td>
-              </tr>
-              <tr>
-                <th>loaded</th>
-                <td>{loaded.toFixed(3)}</td>
-              </tr>
-              <tr>
-                <th>duration</th>
-                <td><Duration seconds={duration} /></td>
-              </tr>
-              <tr>
-                <th>elapsed</th>
-                <td><Duration seconds={duration * played} /></td>
-              </tr>
-              <tr>
-                <th>remaining</th>
-                <td><Duration seconds={duration * (1 - played)} /></td>
-              </tr>
             </tbody>
           </table>
         </section>
-        <footer className='footer'>
-          {SEPARATOR}
-          <a href='https://github.com/CookPete/react-player'>GitHub</a>
-          {SEPARATOR}
-          <a href='https://www.npmjs.com/package/react-player'>npm</a>
-        </footer>
       </div>
     )
   }
