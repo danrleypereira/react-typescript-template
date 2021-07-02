@@ -1,6 +1,6 @@
 import React from "react";
 
-import ReactPlayer from "react-player";
+// import ReactPlayer from "react-player";
 
 interface Props {
   name: string;

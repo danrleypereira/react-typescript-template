@@ -1,3 +1,6 @@
+/* estilos para o ant design */
+@import '~antd/dist/antd.css';
+
 .App {
   text-align: center;
 }

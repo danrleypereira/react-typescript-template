@@ -6,6 +6,29 @@ Para rodar a primeira vez você precisará usar:
 - instalar o prettier formatter no vs code
 -
 
+# Guia de estilo
+
+## Geral
+
+- Todo TSX deve começar com as importações do REACT (useState, useEffect, useContext etc);
+- Importações de módulos das bibliotecas;
+- páginas;
+- componentes;
+- estilos;
+- Interfaces;
+- Declaração do componente;
+- exportar a declaração do componente só no final do arquivo.
+
+e.g.: [App.tsx - arquivo principal do projeto](/src/App.tsx)
+## FC => Componentes Funcionais
+
+- Seguir o guia [geral](#geral)
+- useStates
+- useEffects
+- eventos
+- funções auxiliares
+- componente em si
+
 ### `yarn start`
 
 Runs the app in the development mode.\
