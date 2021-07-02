@@ -1,5 +1,4 @@
-
-import React, { ButtonHTMLAttributes, Children, ReactNode } from "react";
+import React, { ButtonHTMLAttributes } from "react";
 
 // import { Container } from './styles';
 
@@ -10,7 +9,7 @@ import React, { ButtonHTMLAttributes, Children, ReactNode } from "react";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button = ({children, ...rest}: ButtonProps) => {
+const Button: React.FunctionComponent<ButtonProps> = ({ children, ...rest }: ButtonProps) => {
   return (
     <button type="button" {...rest}>
       {children}

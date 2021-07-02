@@ -1,3 +1,4 @@
+/* eslint-disable */
 const webStream = {
   get: function (url, callback) {
       let webClient;
